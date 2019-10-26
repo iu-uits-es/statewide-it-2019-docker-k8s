@@ -1,6 +1,6 @@
 # Docker & Kubernetes Hands On Workshop
 
-**[Slides]()**
+**[Slides](https://iu-uits-es.github.io/statewide-it-2019-docker-k8s/)**
 
 ## Labs
 
