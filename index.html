@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Hands On with Docker & Kubernetes</title>
+
+    <link href="//assets.iu.edu/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/reveal.css" />
+    <link rel="stylesheet" href="css/theme/swit19.css" />
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/monokai.css" />
+
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.type = "text/css";
+      link.href = window.location.search.match(/print-pdf/gi)
+        ? "css/print/pdf.css"
+        : "css/print/paper.css";
+      document.getElementsByTagName("head")[0].appendChild(link);
+    </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <section>
+              <img src="img/iu-logo-top-tail.svg" style="position: absolute; left: 0; top: 0; width: 10%; background: inherit; border: 0; box-shadow: none;" />
+              <h3 style="margin-top: 5%; margin-bottom: 3em; margin-left: 13%; text-align: left">Hands on with Docker & Kubernetes</h3>
+              <div style="float: left; text-align: left; color: #ccc">
+                <p style="font-size: smaller;">https://bit.ly/32LT4M6</p>
+                <strong>James Bennett</strong><br />Enterprise Systems, UITS
+              </div>
+              <div style="float: right; margin-top: 1.5rem;">
+                <img src="img/swit-19-logo.png" style="background: inherit; border: 0; box-shadow: none;" />
+              </div>
+          </section>
+          <section>
+            <h3>Agenda</h3>
+            <ul>
+              <li>Overview of Docker</li>
+              <li>Container Orchestration</li>
+              <li>Hands-on exercises (~90 minutes)</li>
+              <li>Where to go next</li>
+              <li>Q&A</li>
+            </ul>
+          </section>
+        </section>
+        <section>
+          <section data-background-image="img/docker-overview.jpg">
+            <h2 class="textbox">Docker Overview</h2>
+          </section>
+          <section>
+            <h3>Why Containers?</h3>
+            <span class="fragment fade-in">Containers are popular because they are:</span>
+            <ul>
+                <li class="fragment fade-in-then-semi-out">Flexible</li>
+                <li class="fragment fade-in-then-semi-out">Lightweight</li>
+                <li class="fragment fade-in-then-semi-out">Portable</li>
+                <li class="fragment fade-in-then-semi-out">Loosely Coupled</li>
+                <li class="fragment fade-in-then-semi-out">Scalable</li>
+                <li class="fragment fade-in-then-semi-out">Secure</li>
+            </ul>
+          </section>
+          <section>
+            <h3>Docker Images</h3>
+            <div style="clear: both;">
+                <p class="left-col" style="margin-top: 50px;">Self-contained filesystem of everything needed to run an application.</p>
+                <img src="img/docker-image.png" class="right-col" />
+                <p class="left-col fragment fade-in" style="font-weight: bold; margin-top: 20px; clear: left;">Images are immutable!</p>
+              </div>
+          </section>
+          <section>
+            <h3>Dockerfile</h3>
+            <p style="text-align: left;">A text file that contains a script used to create an image. <span class="fragment fade-in">This allows various commands, including:</span></p>
+            <ul>
+                <li class="fragment fade-in-then-semi-out"><span style="color: #287CF9">FROM</span> - specify the parent image</li>
+                <li class="fragment fade-in-then-semi-out"><span style="color: #287CF9">COPY</span> - copy files into the image</li>
+                <li class="fragment fade-in-then-semi-out"><span style="color: #287CF9">RUN</span> - run a command inside the container </li>
+                <li class="fragment fade-in-then-semi-out"><span style="color: #287CF9">CMD</span> - default command to run on startup</li>
+            </ul>
+          </section>
+          <section>
+            <h3>Registry</h3>
+            <div style="clear: both;">
+              <ul>
+                  <li class="fragment fade-in-then-semi-out">Allows sharing images</li>
+                  <li class="fragment fade-in-then-semi-out">Docker Hub is the default registry</li>
+                  <li class="fragment fade-in-then-semi-out">Provides a library of official images</li>
+                  <li class="fragment fade-in-then-semi-out">Role-based access control to images</li>
+              </ul>
+            </div>
+          </section>
+          <section>
+            <h3>Containers</h3>
+            <ul>
+                <li class="fragment fade-in-then-semi-out">A container is JUST another process on the machine</li>
+                <li class="fragment fade-in-then-semi-out">The filesystem for the container comes from an image</li>
+                <li class="fragment fade-in-then-semi-out">It uses namespaces and control groups (cgroups) to provide isolation</li>
+            </ul>
+          </section>
+          <section>
+            <h3>Container vs VM</h3>
+            <div style="clear: both;">
+                <img src="img/container.png" class="left-col" />
+                <img src="img/virtual-machine.png" class="right-col" />
+            </div>
+          </section>
+        </section>
+        <section>
+          <section data-background-image="img/container-orchestration.jpg">
+            <h2 class="textbox">Container Orchestration</h2>
+          </section>
+          <section>
+            <blockquote cite="https://devopedia.org/container-orchestration">
+                &ldquo;Container orchestration is a process that automates the <span class="fragment highlight-current-red">deployment</span>, <span class="fragment highlight-current-red">management</span>, scaling, networking, and <span class="fragment highlight-current-red">availability</span> of container-based applications on a <span class="fragment highlight-current-red">cluster of machines.</span>&rdquo;
+            </blockquote>
+          </section>
+          <section>
+              <h3>Orchestration Platforms</h3>
+              <img src="img/docker-swarm.png" style="width: 35%;" />
+              <img src="img/kubernetes.png" style="width: 30%; margin-left: 50px;" /><br />
+              <h4 style="display: inline-block; width: 35%;">Docker Swarm</h4>
+              <h4 style="display: inline-block; width: 30%; margin-left: 50px;">Kubernetes</h4>
+            </section>
+          <section>
+              <h3 style="margin-bottom: 50px;">Docker Swarm</h3>
+              <div style="clear: both;">
+                  <div class="left-col" style="border-right: 1px solid white;">
+                      <h4>Positives</h4>
+                      <ul>
+                          <li class="fragment fade-in-then-semi-out">Built into the Docker runtime</li>
+                          <li class="fragment fade-in-then-semi-out">Easy to setup</li>
+                          <li class="fragment fade-in-then-semi-out">Simple, opinionated, full-stack model</li>
+                      </ul>
+                  </div>
+                  <div class="right-col">
+                      <h4>Negatives</h4>
+                      <ul>
+                          <li class="fragment fade-in-then-semi-out">Arrived late</li>
+                          <li class="fragment fade-in-then-semi-out">Slow to evolve</li>
+                          <li class="fragment fade-in-then-semi-out">Unstable networking</li>
+                          <li class="fragment fade-in-then-semi-out">Not adopted by vendors</li>
+                      </ul>
+                  </div>
+              </div>
+            </section>
+            <section>
+              <h3>Kubernetes</h3>
+              <div style="clear: both;">
+                <ul class="left-col">
+                    <li class="fragment fade-in-then-semi-out">Open sourced in 2015</li>
+                    <li class="fragment fade-in-then-semi-out">Maintained by the CNCF</li>
+                    <li class="fragment fade-in-then-semi-out">General-purpose approach to container orchestration</li>
+                    <li class="fragment fade-in">Very wide adoption by vendors</li>
+                </ul>
+                <img src="img/k8s-tweet.png" class="right-col fragment fade-in-then-semi-out" />
+              </div>
+            </section>
+            <section>
+              <h2>Kubernetes Core Concepts</h2>
+            </section>
+            <section data-transition="none">
+              <h3>Nodes & Cluster</h3>
+              <img src="img/k8s-concepts-1.png" style="margin: auto; width: 80%;" />
+            </section>
+            <section data-transition="none">
+              <h3>Pods</h3>
+              <img src="img/k8s-concepts-2.png" style="margin: auto; width: 80%;" />
+            </section>
+            <section data-transition="none">
+              <h3>Pods</h3>
+              <img src="img/k8s-concepts-3.png" style="margin: auto; width: 80%;" />
+            </section>
+            <section data-transition="none">
+              <h3>Pods</h3>
+              <img src="img/k8s-concepts-4.png" style="margin: auto; width: 80%;" />
+            </section>
+            <section data-transition="none">
+              <h3>Pods</h3>
+              <img src="img/k8s-concepts-5.png" style="margin: auto; width: 80%;" />
+            </section>
+            <section data-transition="none">
+              <h3>Replica Sets</h3>
+              <img src="img/k8s-concepts-6.png" style="margin: auto; width: 80%;" />
+            </section>
+            <section data-transition="none">
+              <h3>Replica Sets</h3>
+              <img src="img/k8s-concepts-7.png" style="margin: auto; width: 80%;" />
+            </section>
+            <section data-transition="none">
+              <h3>&nbsp;</h3>
+              <img src="img/k8s-concepts-8.png" style="margin: auto; width: 80%;" />
+            </section>
+            <section data-transition="none">
+              <h3>Deployments</h3>
+              <img src="img/k8s-concepts-9.png" style="margin: auto; width: 80%;" />
+            </section>
+            <section data-transition="none">
+              <h3>Deployments</h3>
+              <img src="img/k8s-concepts-10.png" style="margin: auto; width: 80%;" />
+            </section>
+            <section data-transition="none">
+              <h3>Deployments</h3>
+              <img src="img/k8s-concepts-11.png" style="margin: auto; width: 80%;" />
+            </section>
+            <section data-transition="none">
+              <h3>Deployments</h3>
+              <img src="img/k8s-concepts-12.png" style="margin: auto; width: 80%;" />
+            </section>
+            <section data-transition="none">
+              <h3>Services</h3>
+              <img src="img/k8s-concepts-13.png" style="margin: auto; width: 80%;" />
+            </section>
+            <section data-transition="none">
+              <h3>Services</h3>
+              <img src="img/k8s-concepts-14.png" style="margin: auto; width: 80%;" />
+            </section>
+            <section data-transition="none">
+              <h3>Services</h3>
+              <img src="img/k8s-concepts-15.png" style="margin: auto; width: 80%;" />
+            </section>
+            <section>
+              <h3>Core Concepts</h3>
+              <ul>
+                  <li>Pods</li>
+                  <li>Replica Sets</li>
+                  <li>Deployments</li>
+                  <li>Services</li>
+              </ul>
+            </section>
+        </section>
+        <section>
+          <section data-background-image="img/workshop.jpg">
+            <h2 class="textbox">Labs</h2>
+          </section>
+          <section>
+            <h3>Lab Options</h3>
+            <ul>
+                <li class="fragment fade-in">Docker 101 (#LearnDocker): <a href="https://dockr.ly/dev101">dockr.ly/dev101</a></li>
+                <li class="fragment fade-in">Kubernetes Basics: <a href="https://bit.ly/2pg8bPj">bit.ly/2pg8bPj</a></li>
+                <li class="fragment fade-in">Other Docker Labs: <a href="https://bit.ly/343bbNI">bit.ly/343bbNI</a></li>
+            </ul>
+          </section>
+        </section>
+        <section>
+          <section data-background-image="img/next-steps.jpg">
+            <h2 class="textbox">Where to go next</h2>
+          </section>
+          <section>
+            <h3>Version Control</h3>
+            <ul>
+                <li>Dockerfile(s)</li>
+                <li>.dockerignore</li>
+                <li>Swarm Compose files</li>
+                <li>Kubernetes manifests</li>
+            </ul>
+          </section>
+          <section>
+            <h3>Image Hardening</h3>
+            <ul>
+                <li class="fragment fade-in-then-semi-out">Use reliable base images</li>
+                <li class="fragment fade-in-then-semi-out">Depend on specific versions</li>
+                <li class="fragment fade-in-then-semi-out">Minimize dependencies</li>
+                <li class="fragment fade-in-then-semi-out">Never include sensitive information</li>
+                <li class="fragment fade-in-then-semi-out">Image Scanning</li>
+                <li class="fragment fade-in-then-semi-out">Sign trusted images</li>
+                <li class="fragment fade-in-then-semi-out">Push to a trusted repository</li>
+            </ul>
+          </section>
+          <section>
+            <h3>CNCF Landscape</h3>
+            <a href="https://landscape.cncf.io/">landscape.cncf.io</a>
+          </section>
+          <section>
+              <h3>Improve Deployments</h3>
+              <ul>
+                  <li class="fragment fade-in-then-semi-out">Health checks & probes</li>
+                  <li class="fragment fade-in-then-semi-out">Config & secrets</li>
+                  <li class="fragment fade-in-then-semi-out">Resource quotas</li>
+                  <li class="fragment fade-in-then-semi-out">Autoscalers</li>
+                  <li class="fragment fade-in-then-semi-out">Ingress</li>
+              </ul>
+            </section>
+            <section>
+              <h3>Other Topics</h3>
+              <ul>
+                  <li class="fragment fade-in-then-semi-out">Namespaces & role-based Access Control</li>
+                  <li class="fragment fade-in-then-semi-out">Stateful workloads</li>
+                  <li class="fragment fade-in-then-semi-out">Batch jobs</li>
+                  <li class="fragment fade-in-then-semi-out">Helm charts</li>
+              </ul>
+            </section>
+            </section>
+        <section data-background-image="img/ask-questions.png">
+          <h2 class="textbox">Questions?</h2>
+        </section>
+        <section>
+            <h2>Thanks!</h2>
+            <img src="img/thanks.png" style="width:50%;">
+            <p>James Bennett - jawbenne@iu.edu</p>
+            <p><small><a href="https://github.com/iu-uits-es/statewide-it-2019-docker-k8s">https://github.com/iu-uits-es/statewide-it-2019-docker-k8s</a></small></p>
+        </section>
+        <div id="footer" class="footer" style="display: none;">
+          <img src="img/iu-logo.svg" />
+          <span>Statewide IT Conference 2019</span>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/reveal.js"></script>
+
+    <script>
+      // More info about config & dependencies:
+      // - https://github.com/hakimel/reveal.js#configuration
+      // - https://github.com/hakimel/reveal.js#dependencies
+      Reveal.initialize({
+        history: true,
+        controls: true,
+        progress: true,
+        dependencies: [
+          { src: "plugin/markdown/marked.js" },
+          { src: "plugin/markdown/markdown.js" },
+          { src: "plugin/notes/notes.js", async: true },
+          { src: "plugin/highlight/highlight.js", async: true }
+        ]
+      });
+      Reveal.addEventListener( 'slidechanged', function( event ) {
+				if(event.indexh === 0 && event.indexv == 0) {
+					document.getElementById('footer').style.display = 'none';
+				} else if(event.indexv == 0) {
+					document.getElementById('footer').style.display = 'none';
+				} else {
+					document.getElementById('footer').style.display = 'flex';
+				}
+			} );
+    </script>
+  </body>
+</html>
