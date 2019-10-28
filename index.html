@@ -77,12 +77,12 @@
           </section>
           <section>
             <h3>Dockerfile</h3>
-            <p style="text-align: left;">A text file that contains a script used to create an image. <span class="fragment fade-in">This allows various commands, including:</span></p>
+            <p style="text-align: left;">A text file that contains a script used to create an image. This allows various commands, including:</p>
             <ul>
-                <li class="fragment fade-in-then-semi-out"><span style="color: #287CF9">FROM</span> - specify the parent image</li>
-                <li class="fragment fade-in-then-semi-out"><span style="color: #287CF9">COPY</span> - copy files into the image</li>
-                <li class="fragment fade-in-then-semi-out"><span style="color: #287CF9">RUN</span> - run a command inside the container </li>
-                <li class="fragment fade-in-then-semi-out"><span style="color: #287CF9">CMD</span> - default command to run on startup</li>
+                <li><span style="color: #287CF9">FROM</span> - specify the parent image</li>
+                <li><span style="color: #287CF9">COPY</span> - copy files into the image</li>
+                <li><span style="color: #287CF9">RUN</span> - run a command inside the container </li>
+                <li><span style="color: #287CF9">CMD</span> - default command to run on startup</li>
             </ul>
           </section>
           <section>
@@ -100,7 +100,7 @@
             <h3>Containers</h3>
             <ul>
                 <li class="fragment fade-in-then-semi-out">A container is JUST another process on the machine</li>
-                <li class="fragment fade-in-then-semi-out">The filesystem for the container comes from an image</li>
+                <li class="fragment fade-in-then-semi-out">The filesystem for the container starts from an image</li>
                 <li class="fragment fade-in-then-semi-out">It uses namespaces and control groups (cgroups) to provide isolation</li>
             </ul>
           </section>
@@ -109,6 +109,18 @@
             <div style="clear: both;">
                 <img src="img/container.png" class="left-col" />
                 <img src="img/virtual-machine.png" class="right-col" />
+            </div>
+          </section>
+          <section>
+            <h3>Docker</h3>
+            <div style="clear: both;">
+              <ul class="left-col" style="margin-top: 70px;">
+                  <li>Image Builder</li>
+                  <li>Container Runtime</li>
+                  <li>REST API</li>
+                  <li>Command Line Interface</li>
+              </ul>
+              <img src="img/docker-engine.png" class="right-col" />
             </div>
           </section>
         </section>
@@ -242,9 +254,9 @@
           <section>
             <h3>Lab Options</h3>
             <ul>
-                <li class="fragment fade-in">Docker 101 (#LearnDocker): <a href="https://dockr.ly/dev101">dockr.ly/dev101</a></li>
-                <li class="fragment fade-in">Kubernetes Basics: <a href="https://bit.ly/2pg8bPj">bit.ly/2pg8bPj</a></li>
-                <li class="fragment fade-in">Other Docker Labs: <a href="https://bit.ly/343bbNI">bit.ly/343bbNI</a></li>
+                <li>Docker 101 (#LearnDocker): <a href="https://dockr.ly/dev101">dockr.ly/dev101</a></li>
+                <li>Kubernetes Basics: <a href="https://bit.ly/2pg8bPj">bit.ly/2pg8bPj</a></li>
+                <li>Other Docker Labs: <a href="https://bit.ly/343bbNI">bit.ly/343bbNI</a></li>
             </ul>
           </section>
         </section>
@@ -267,8 +279,8 @@
                 <li class="fragment fade-in-then-semi-out">Use reliable base images</li>
                 <li class="fragment fade-in-then-semi-out">Depend on specific versions</li>
                 <li class="fragment fade-in-then-semi-out">Minimize dependencies</li>
-                <li class="fragment fade-in-then-semi-out">Never include sensitive information</li>
                 <li class="fragment fade-in-then-semi-out">Image Scanning</li>
+                <li class="fragment fade-in-then-semi-out">Never include sensitive information</li>
                 <li class="fragment fade-in-then-semi-out">Sign trusted images</li>
                 <li class="fragment fade-in-then-semi-out">Push to a trusted repository</li>
             </ul>
@@ -282,9 +294,11 @@
               <ul>
                   <li class="fragment fade-in-then-semi-out">Health checks & probes</li>
                   <li class="fragment fade-in-then-semi-out">Config & secrets</li>
+                  <li class="fragment fade-in-then-semi-out">Volumes</li>
                   <li class="fragment fade-in-then-semi-out">Resource quotas</li>
                   <li class="fragment fade-in-then-semi-out">Autoscalers</li>
                   <li class="fragment fade-in-then-semi-out">Ingress</li>
+                  <li class="fragment fade-in-then-semi-out">DaemonSet</li>
               </ul>
             </section>
             <section>
